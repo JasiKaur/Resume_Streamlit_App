@@ -10,8 +10,17 @@ load_dotenv()
 AZURE_KEY = os.getenv("AZURE_KEY")
 AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
 
+
+
+
 # Initialize Azure Language client
-client = TextAnalyticsClient(endpoint=AZURE_ENDPOINT, credential=AzureKeyCredential(AZURE_KEY))
+if not AZURE_KEY or not AZURE_ENDPOINT:
+    st.error("⚠️ Azure credentials missing. Please add them in Streamlit Cloud → Secrets.")
+else:
+    client = TextAnalyticsClient(
+        endpoint=AZURE_ENDPOINT,
+        credential=AzureKeyCredential(AZURE_KEY)
+    )
 
 # Streamlit UI
 st.title("Resume Key Phrase Extractor & Experience Analyzer")
